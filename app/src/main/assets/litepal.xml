@@ -8,7 +8,7 @@
     	For example:
     	<dbname value="demo" />
     -->
-    <dbname value="demo" />
+    <dbname value="memorange" />
 
     <!--
     	Define the version of your database. Each time you want
@@ -32,6 +32,7 @@
     	</list>
     -->
     <list>
+        <mapping class="top.orange233.memorange.bean.MemoBean" />
     </list>
 
     <!--

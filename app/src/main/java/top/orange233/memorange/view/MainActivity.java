@@ -1,7 +1,11 @@
 package top.orange233.memorange.view;
 
+import android.content.Intent;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import top.orange233.memorange.R;
 import top.orange233.memorange.contract.MemoContract;
@@ -12,14 +16,22 @@ public class MainActivity extends BaseMVPActivity<MemoPresenter> implements Memo
 
     RecyclerView recyclerView;
     MemoAdapter memoAdapter;
+    FloatingActionButton floatingActionButton;
 
     @Override
     protected void init() {
         setContentView(R.layout.activity_main);
         recyclerView = findViewById(R.id.recycler_view);
+        floatingActionButton = findViewById(R.id.floating_action_bar_add_memo);
+
         LinearLayoutManager llm = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(llm);
         recyclerView.setAdapter(memoAdapter);
+
+        floatingActionButton.setOnClickListener(v -> {
+            Intent intent = new Intent(this, EditMemoActivity.class);
+            startActivity(intent);
+        });
     }
 
     @Override
@@ -29,7 +41,7 @@ public class MainActivity extends BaseMVPActivity<MemoPresenter> implements Memo
 
     @Override
     public void addMemo() {
-        //TODO 单击进入Fragment，文字编辑界面
+        //TODO 单击进入文字编辑界面
         mPresenter.addMemo();
     }
 

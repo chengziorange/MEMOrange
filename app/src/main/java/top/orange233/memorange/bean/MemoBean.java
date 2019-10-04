@@ -1,15 +1,27 @@
 package top.orange233.memorange.bean;
 
-public class MemoBean {
+import org.litepal.crud.LitePalSupport;
 
+public class MemoBean extends LitePalSupport {
+
+    private int index;
     private String title;
     private String date;
     private String content;
 
-    public MemoBean(String title, String date, String content) {
+    public MemoBean(String title, String date, String content, int index) {
+        this.index = index;
         this.title = title;
         this.date = date;
         this.content = content;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
 
     public String getTitle() {
