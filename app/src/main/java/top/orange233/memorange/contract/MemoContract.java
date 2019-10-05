@@ -8,11 +8,12 @@ public interface MemoContract {
 
         void addMemo();
 
+        void editMemo();
+
         void removeMemo();
     }
 
     interface Presenter {
 
-        void addMemo();
     }
 }

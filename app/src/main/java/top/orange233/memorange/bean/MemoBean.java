@@ -1,26 +1,34 @@
 package top.orange233.memorange.bean;
 
+import org.litepal.annotation.Column;
 import org.litepal.crud.LitePalSupport;
 
 public class MemoBean extends LitePalSupport {
 
-    private int index;
+    private long index;
+
+    @Column(defaultValue = "无标题")
     private String title;
+
     private String date;
+
     private String content;
 
-    public MemoBean(String title, String date, String content, int index) {
+    public MemoBean() {
+    }
+
+    public MemoBean(int index, String title, String date, String content) {
         this.index = index;
         this.title = title;
         this.date = date;
         this.content = content;
     }
 
-    public int getIndex() {
+    public long getIndex() {
         return index;
     }
 
-    public void setIndex(int index) {
+    public void setIndex(long index) {
         this.index = index;
     }
 

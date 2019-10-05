@@ -11,8 +11,4 @@ public class MemoPresenter extends BasePresenter<MemoContract.View> implements M
         this.memoModel = new MemoModel();
     }
 
-    @Override
-    public void addMemo() {
-        //TODO
-    }
 }

@@ -1,5 +1,6 @@
 package top.orange233.memorange.model;
 
+import top.orange233.memorange.bean.MemoBean;
 import top.orange233.memorange.utils.Callback;
 
 /**
@@ -7,7 +8,7 @@ import top.orange233.memorange.utils.Callback;
  */
 public interface IMemoModel extends IModel {
 
-    void addMemo();
+    void editMemo(int index, String memoTitle, String memoContent);
 
-    void editMemo(int index, String memoTitle, String memoContent, final Callback callback);
+    void showMemo(int index, final Callback<MemoBean,String> callback);
 }

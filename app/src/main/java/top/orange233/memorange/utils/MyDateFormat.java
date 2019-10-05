@@ -15,7 +15,7 @@ public class MyDateFormat {
         return instance;
     }
 
-    private String getDate() {
+    public String getDate() {
         Date dNow = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("MM月dd日 HH:mm");
         return sdf.format(dNow);

@@ -11,6 +11,7 @@ import top.orange233.memorange.R;
 import top.orange233.memorange.contract.MemoContract;
 import top.orange233.memorange.presenter.MemoPresenter;
 import top.orange233.memorange.utils.MemoAdapter;
+import top.orange233.memorange.utils.MyConstants;
 
 public class MainActivity extends BaseMVPActivity<MemoPresenter> implements MemoContract.View {
 
@@ -30,6 +31,8 @@ public class MainActivity extends BaseMVPActivity<MemoPresenter> implements Memo
 
         floatingActionButton.setOnClickListener(v -> {
             Intent intent = new Intent(this, EditMemoActivity.class);
+            intent.putExtra(MyConstants.KEY_EDIT_MEMO_BEHAVIOR, MyConstants.BEHAVIOR_ADD_NEW_MEMO);
+            intent.putExtra(MyConstants.KEY_MEMO_ID, MyConstants.FLAG_ADD_NEW_MEMO);
             startActivity(intent);
         });
     }
@@ -41,12 +44,20 @@ public class MainActivity extends BaseMVPActivity<MemoPresenter> implements Memo
 
     @Override
     public void addMemo() {
-        //TODO 单击进入文字编辑界面
-        mPresenter.addMemo();
+        //TODO 单击右下角按钮触发
+    }
+
+    @Override
+    public void editMemo() {
+        //TODO 点击Item后触发
+        Intent intent = new Intent(this, EditMemoActivity.class);
+        intent.putExtra(MyConstants.KEY_EDIT_MEMO_BEHAVIOR, MyConstants.BEHAVIOR_EDIT_EXISTING_MEMO);
+        intent.putExtra(MyConstants.KEY_MEMO_ID, "REPLACE_HERE_WITH_MEMO_ID");
+        startActivity(intent);
     }
 
     @Override
     public void removeMemo() {
-        //TODO 长按多选删除/弹出删除气泡
+        //TODO 长按Item多选删除/弹出删除气泡
     }
 }
