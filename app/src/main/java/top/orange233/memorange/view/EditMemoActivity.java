@@ -1,9 +1,12 @@
 package top.orange233.memorange.view;
 
+import android.content.Intent;
 import android.util.Log;
 import android.widget.EditText;
 
 import androidx.appcompat.widget.Toolbar;
+
+import com.jaeger.library.StatusBarUtil;
 
 import top.orange233.memorange.R;
 import top.orange233.memorange.bean.MemoBean;
@@ -16,26 +19,23 @@ public class EditMemoActivity extends BaseMVPActivity<EditMemoPresenter> impleme
     EditText editTextContent;
     EditText editTextTitle;
     Toolbar toolbar;
-    String behavior;
     int index;
 
     @Override
     protected void init() {
         setContentView(R.layout.activity_memo);
-        behavior = getIntent().getStringExtra(MyConstants.KEY_EDIT_MEMO_BEHAVIOR);
+        StatusBarUtil.setTransparent(this);
+        StatusBarUtil.setLightMode(this);
         index = getIntent().getIntExtra(MyConstants.KEY_MEMO_ID, MyConstants.FLAG_ADD_NEW_MEMO);
+        Log.d("TAG","EditMemoAcitivity index = "+index);
         editTextContent = findViewById(R.id.et_memo_content);
         editTextTitle = findViewById(R.id.et_memo_title);
         toolbar = findViewById(R.id.toolbar_memo);
 
-        Log.d("TAG", "" + index);
         mPresenter.showMemo(index);
 
         toolbar.setNavigationOnClickListener(v -> {
-            String memoTitle = editTextTitle.getText().toString();
-            String memoContent = editTextContent.getText().toString();
-
-            mPresenter.submitEdit(index, memoTitle, memoContent);
+            onBackPressed();
         });
     }
 
@@ -53,5 +53,15 @@ public class EditMemoActivity extends BaseMVPActivity<EditMemoPresenter> impleme
     @Override
     public void showMemoFail() {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        String memoTitle = editTextTitle.getText().toString();
+        String memoContent = editTextContent.getText().toString();
+
+        mPresenter.submitEdit(index, memoTitle, memoContent);
+
+        super.onBackPressed();
     }
 }

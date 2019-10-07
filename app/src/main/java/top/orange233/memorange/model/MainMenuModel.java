@@ -1,0 +1,19 @@
+package top.orange233.memorange.model;
+
+import org.litepal.LitePal;
+
+import java.util.List;
+
+import top.orange233.memorange.bean.MemoBean;
+import top.orange233.memorange.utils.Callback;
+
+public class MainMenuModel implements IMainMenuModel {
+    @Override
+    public void searchFor(String s, final Callback<List<MemoBean>, String> callback) {
+        List<MemoBean> tmpList = LitePal.select("title", "content")
+                .where("title like ? or content like ?", "%" + s + "%", "%" + s + "%")
+                .order("number")
+                .find(MemoBean.class);
+        callback.onSuccess(tmpList);
+    }
+}

@@ -1,63 +1,92 @@
 package top.orange233.memorange.view;
 
 import android.content.Intent;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.EditText;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.jaeger.library.StatusBarUtil;
+
+import java.util.List;
 
 import top.orange233.memorange.R;
-import top.orange233.memorange.contract.MemoContract;
-import top.orange233.memorange.presenter.MemoPresenter;
+import top.orange233.memorange.bean.MemoBean;
+import top.orange233.memorange.contract.MainMenuContract;
+import top.orange233.memorange.presenter.MainMenuPresenter;
 import top.orange233.memorange.utils.MemoAdapter;
 import top.orange233.memorange.utils.MyConstants;
 
-public class MainActivity extends BaseMVPActivity<MemoPresenter> implements MemoContract.View {
+public class MainActivity extends BaseMVPActivity<MainMenuPresenter> implements MainMenuContract.View {
 
     RecyclerView recyclerView;
+    EditText editTextSearchBar;
     MemoAdapter memoAdapter;
     FloatingActionButton floatingActionButton;
 
     @Override
     protected void init() {
         setContentView(R.layout.activity_main);
+        StatusBarUtil.setTransparent(this);
+        StatusBarUtil.setLightMode(this);
         recyclerView = findViewById(R.id.recycler_view);
+        editTextSearchBar = findViewById(R.id.et_search_bar);
         floatingActionButton = findViewById(R.id.floating_action_bar_add_memo);
 
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(llm);
+        StaggeredGridLayoutManager lm = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(lm);
+
+        memoAdapter = new MemoAdapter();
         recyclerView.setAdapter(memoAdapter);
 
         floatingActionButton.setOnClickListener(v -> {
+            memoAdapter.addMemo();
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             Intent intent = new Intent(this, EditMemoActivity.class);
-            intent.putExtra(MyConstants.KEY_EDIT_MEMO_BEHAVIOR, MyConstants.BEHAVIOR_ADD_NEW_MEMO);
             intent.putExtra(MyConstants.KEY_MEMO_ID, MyConstants.FLAG_ADD_NEW_MEMO);
             startActivity(intent);
+        });
+
+        editTextSearchBar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                mPresenter.searchFor(s.toString());
+            }
         });
     }
 
     @Override
-    protected MemoPresenter createPresenter() {
-        return new MemoPresenter();
+    public void showSearchResult(List<MemoBean> memoBeans) {
+        memoAdapter.setmMemoBeanList(memoBeans);
+        memoAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void addMemo() {
-        //TODO 单击右下角按钮触发
+    protected void onResume() {
+        super.onResume();
+        memoAdapter.updateListChange();
+        memoAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void editMemo() {
-        //TODO 点击Item后触发
-        Intent intent = new Intent(this, EditMemoActivity.class);
-        intent.putExtra(MyConstants.KEY_EDIT_MEMO_BEHAVIOR, MyConstants.BEHAVIOR_EDIT_EXISTING_MEMO);
-        intent.putExtra(MyConstants.KEY_MEMO_ID, "REPLACE_HERE_WITH_MEMO_ID");
-        startActivity(intent);
-    }
-
-    @Override
-    public void removeMemo() {
-        //TODO 长按Item多选删除/弹出删除气泡
+    protected MainMenuPresenter createPresenter() {
+        return new MainMenuPresenter();
     }
 }

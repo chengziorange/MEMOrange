@@ -5,7 +5,7 @@ import org.litepal.crud.LitePalSupport;
 
 public class MemoBean extends LitePalSupport {
 
-    private long index;
+    private int number = -1;
 
     @Column(defaultValue = "无标题")
     private String title;
@@ -17,19 +17,19 @@ public class MemoBean extends LitePalSupport {
     public MemoBean() {
     }
 
-    public MemoBean(int index, String title, String date, String content) {
-        this.index = index;
+    public MemoBean(int number, String title, String date, String content) {
+        this.number = number;
         this.title = title;
         this.date = date;
         this.content = content;
     }
 
-    public long getIndex() {
-        return index;
+    public long getNumber() {
+        return number;
     }
 
-    public void setIndex(long index) {
-        this.index = index;
+    public void setNumber(int number) {
+        this.number = number;
     }
 
     public String getTitle() {
