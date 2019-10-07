@@ -78,7 +78,6 @@ public class MainActivity extends BaseMVPActivity<MainMenuPresenter> implements 
 
     @Override
     public void showSearchResultSuccess(List<MemoBean> memoBeans) {
-        Log.d("TAG", "MainActivity search result[0]'s number = " + memoBeans.get(0).getNumber());
         memoAdapter.showSearchResult(memoBeans);
         memoAdapter.notifyDataSetChanged();
     }
