@@ -16,7 +16,6 @@ public class MainMenuModel implements IMainMenuModel {
                 .where("title like ? or content like ?", "%" + s + "%", "%" + s + "%")
                 .order("number")
                 .find(MemoBean.class);
-        Log.d("TAG","MainMenuModel tmpList size = "+tmpList.size());
         callback.onSuccess(tmpList);
     }
 }

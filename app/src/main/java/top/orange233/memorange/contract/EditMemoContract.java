@@ -8,8 +8,6 @@ public interface EditMemoContract {
     interface View extends IView {
 
         void showMemoSuccess(MemoBean memoBean);
-
-        void showMemoFail();
     }
 
     interface Presenter {

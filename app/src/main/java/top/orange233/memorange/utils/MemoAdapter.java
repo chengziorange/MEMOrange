@@ -2,7 +2,6 @@ package top.orange233.memorange.utils;
 
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,12 +27,12 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.MyViewHolder> 
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        View memoItemView;
-        TextView tvMemoTitle;
-        TextView tvMemoContent;
-        TextView tvMemoDate;
+        private View memoItemView;
+        private TextView tvMemoTitle;
+        private TextView tvMemoContent;
+        private TextView tvMemoDate;
 
-        public MyViewHolder(View view) {
+        MyViewHolder(View view) {
             super(view);
             memoItemView = view;
             tvMemoTitle = view.findViewById(R.id.tv_title);
@@ -46,16 +45,18 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.MyViewHolder> 
         if (!(LitePal.isExist(MemoBean.class))) {
             this.mMemoBeanList = new ArrayList<>();
         } else {
-            this.mMemoBeanList = LitePal.where("number > ?", "-1").order("number").find(MemoBean.class);
+            this.mMemoBeanList = LitePal
+                    .where("number > ?", "-1")
+                    .order("number")
+                    .find(MemoBean.class);
         }
     }
 
-    public MemoAdapter(List<MemoBean> mMemoBeanList) {
-        this.mMemoBeanList = mMemoBeanList;
-    }
-
     public void addMemo() {
-        List<MemoBean> tmpList = LitePal.where("number > ?", "-1").order("number").find(MemoBean.class);
+        List<MemoBean> tmpList = LitePal
+                .where("number > ?", "-1")
+                .order("number")
+                .find(MemoBean.class);
         for (int i = 0; i < tmpList.size(); i++) {
             tmpList.get(i).setNumber(i + 1);
             tmpList.get(i).save();
@@ -63,28 +64,30 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.MyViewHolder> 
         MemoBean memoBean = new MemoBean();
         memoBean.setNumber(0);
         memoBean.save();
-        memoBean = LitePal.where("number = ?", "0").find(MemoBean.class).get(0);
+        memoBean = LitePal
+                .where("number = ?", "0")
+                .find(MemoBean.class)
+                .get(0);
         mMemoBeanList.clear();
         mMemoBeanList.add(memoBean);
         mMemoBeanList.addAll(tmpList);
         notifyItemInserted(0);
-        notifyDataSetChanged();
+        //notifyDataSetChanged();
     }
 
     public void removeMemo(int position) {
-        mMemoBeanList = LitePal.order("number").find(MemoBean.class);
-        Log.d("REMOVE", "mList size before " + mMemoBeanList.size());
+        mMemoBeanList = LitePal
+                .order("number")
+                .find(MemoBean.class);
         mMemoBeanList.get(position).delete();
         mMemoBeanList.remove(position);
-        Log.d("REMOVE", "position " + position);
-        Log.d("REMOVE", "mList size after " + mMemoBeanList.size());
         for (int i = 0; i < mMemoBeanList.size(); i++) {
             mMemoBeanList.get(i).setNumber(i);
             mMemoBeanList.get(i).save();
         }
         updateListChange();
         notifyItemRemoved(position);
-        notifyDataSetChanged();
+        //notifyDataSetChanged();
     }
 
     @NonNull
@@ -104,10 +107,7 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.MyViewHolder> 
 
         holder.memoItemView.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), EditMemoActivity.class);
-            Log.d("TAG", "pos = " + holder.getAdapterPosition());
             int index = mMemoBeanList.get(holder.getAdapterPosition()).getNumber();
-            Log.d("TAG", "index = " + index);
-            Log.d("TAG", "index2 = " + mMemoBeanList.get(holder.getAdapterPosition()).getContent());
             intent.putExtra(MyConstants.KEY_MEMO_ID, index);
             v.getContext().startActivity(intent);
         });
@@ -124,7 +124,9 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.MyViewHolder> 
     }
 
     public void updateListChange() {
-        mMemoBeanList = LitePal.order("number").find(MemoBean.class);
+        mMemoBeanList = LitePal
+                .order("number")
+                .find(MemoBean.class);
     }
 
     public void showSearchResult(List<MemoBean> searchResultList) {

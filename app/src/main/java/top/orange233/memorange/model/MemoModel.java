@@ -1,7 +1,5 @@
 package top.orange233.memorange.model;
 
-import android.util.Log;
-
 import org.litepal.LitePal;
 
 import java.util.List;
@@ -17,7 +15,10 @@ public class MemoModel implements IMemoModel {
         // 从数据库中取出index处的Memo,修改后再存回。回调presenter，通知view
         MemoBean memoBean;
         String memoDate = MyDateFormat.getInstance().getDate();
-        List<MemoBean> tmpMemoBeanList = LitePal.where("number = ?", "" + index).order("number").find(MemoBean.class);
+        List<MemoBean> tmpMemoBeanList = LitePal
+                .where("number = ?", "" + index)
+                .order("number")
+                .find(MemoBean.class);
         memoBean = tmpMemoBeanList.get(0);
         memoBean.setTitle(memoTitle);
         memoBean.setDate(memoDate);
@@ -29,9 +30,11 @@ public class MemoModel implements IMemoModel {
     @Override
     public void showMemo(int number, final Callback<MemoBean, String> callback) {
         MemoBean memoBean;
-        List<MemoBean> tmpMemoBeanList = LitePal.where("number = ?", "" + number).order("number").find(MemoBean.class);
+        List<MemoBean> tmpMemoBeanList = LitePal
+                .where("number = ?", "" + number)
+                .order("number")
+                .find(MemoBean.class);
         memoBean = tmpMemoBeanList.get(0);
-        Log.d("TAG", "showing memo " + memoBean.getNumber() + "+" + memoBean.getTitle());
 
         if (memoBean == null) {
             callback.onFail("出现错误");

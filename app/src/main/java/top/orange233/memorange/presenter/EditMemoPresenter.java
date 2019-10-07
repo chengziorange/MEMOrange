@@ -1,7 +1,5 @@
 package top.orange233.memorange.presenter;
 
-import android.util.Log;
-
 import top.orange233.memorange.bean.MemoBean;
 import top.orange233.memorange.contract.EditMemoContract;
 import top.orange233.memorange.model.IMemoModel;
@@ -26,7 +24,6 @@ public class EditMemoPresenter extends BasePresenter<EditMemoContract.View> impl
         memoModel.showMemo(index, new Callback<MemoBean, String>() {
             @Override
             public void onSuccess(MemoBean memoBean) {
-                Log.d("TAG", "show memo success");
                 if (isViewAttached()) {
                     mView.showMemoSuccess(memoBean);
                 }

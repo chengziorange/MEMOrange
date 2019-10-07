@@ -1,7 +1,5 @@
 package top.orange233.memorange.view;
 
-import android.content.Intent;
-import android.util.Log;
 import android.widget.EditText;
 
 import androidx.appcompat.widget.Toolbar;
@@ -27,7 +25,6 @@ public class EditMemoActivity extends BaseMVPActivity<EditMemoPresenter> impleme
         StatusBarUtil.setTransparent(this);
         StatusBarUtil.setLightMode(this);
         index = getIntent().getIntExtra(MyConstants.KEY_MEMO_ID, MyConstants.FLAG_ADD_NEW_MEMO);
-        Log.d("TAG", "EditMemoAcitivity index = " + index);
         editTextContent = findViewById(R.id.et_memo_content);
         editTextTitle = findViewById(R.id.et_memo_title);
         toolbar = findViewById(R.id.toolbar_memo);
@@ -55,11 +52,6 @@ public class EditMemoActivity extends BaseMVPActivity<EditMemoPresenter> impleme
     }
 
     @Override
-    public void showMemoFail() {
-
-    }
-
-    @Override
     public void onBackPressed() {
         String memoTitle = editTextTitle.getText().toString();
         String memoContent = editTextContent.getText().toString();
@@ -67,5 +59,15 @@ public class EditMemoActivity extends BaseMVPActivity<EditMemoPresenter> impleme
         mPresenter.submitEdit(index, memoTitle, memoContent);
 
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onDestroy() {
+        String memoTitle = editTextTitle.getText().toString();
+        String memoContent = editTextContent.getText().toString();
+
+        mPresenter.submitEdit(index, memoTitle, memoContent);
+
+        super.onDestroy();
     }
 }
