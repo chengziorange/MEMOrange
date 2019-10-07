@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -129,6 +128,7 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.MyViewHolder> 
         this.mMemoBeanList = mMemoBeanList;
     }
 
+    // ctrl c v 大法
     private void initPopWindow(View v, MyViewHolder holder) {
         View view = LayoutInflater.from(v.getContext()).inflate(R.layout.popup_delete, null, false);
         Button btnDelete = view.findViewById(R.id.btn_popup_delete);
