@@ -27,7 +27,7 @@ public class EditMemoActivity extends BaseMVPActivity<EditMemoPresenter> impleme
         StatusBarUtil.setTransparent(this);
         StatusBarUtil.setLightMode(this);
         index = getIntent().getIntExtra(MyConstants.KEY_MEMO_ID, MyConstants.FLAG_ADD_NEW_MEMO);
-        Log.d("TAG","EditMemoAcitivity index = "+index);
+        Log.d("TAG", "EditMemoAcitivity index = " + index);
         editTextContent = findViewById(R.id.et_memo_content);
         editTextTitle = findViewById(R.id.et_memo_title);
         toolbar = findViewById(R.id.toolbar_memo);
@@ -49,7 +49,9 @@ public class EditMemoActivity extends BaseMVPActivity<EditMemoPresenter> impleme
         editTextTitle.setText(memoBean.getTitle());
         editTextTitle.setSelection(memoBean.getTitle().length());
         editTextContent.setText(memoBean.getContent());
-        editTextContent.setSelection(memoBean.getContent().length());
+        if (memoBean.getContent() != null) {
+            editTextContent.setSelection(memoBean.getContent().length());
+        }
     }
 
     @Override
