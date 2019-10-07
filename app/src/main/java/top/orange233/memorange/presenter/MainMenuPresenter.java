@@ -20,7 +20,7 @@ public class MainMenuPresenter extends BasePresenter<MainMenuContract.View> impl
         mainMenuModel.searchFor(s, new Callback<List<MemoBean>, String>() {
             @Override
             public void onSuccess(List<MemoBean> memoBeans) {
-                mView.showSearchResult(memoBeans);
+                mView.showSearchResultSuccess(memoBeans);
             }
 
             @Override

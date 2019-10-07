@@ -24,7 +24,7 @@ public class MemoBean extends LitePalSupport {
         this.content = content;
     }
 
-    public long getNumber() {
+    public int getNumber() {
         return number;
     }
 

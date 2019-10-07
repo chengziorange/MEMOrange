@@ -3,6 +3,7 @@ package top.orange233.memorange.view;
 import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.EditText;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -57,7 +58,10 @@ public class MainActivity extends BaseMVPActivity<MainMenuPresenter> implements 
         editTextSearchBar.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+                if (s != null) {
+                    Log.d("TAG", "text watcher: s != null");
+                    mPresenter.searchFor(s.toString());
+                }
             }
 
             @Override
@@ -73,16 +77,19 @@ public class MainActivity extends BaseMVPActivity<MainMenuPresenter> implements 
     }
 
     @Override
-    public void showSearchResult(List<MemoBean> memoBeans) {
-        memoAdapter.setmMemoBeanList(memoBeans);
+    public void showSearchResultSuccess(List<MemoBean> memoBeans) {
+        Log.d("TAG", "MainActivity search result[0]'s number = " + memoBeans.get(0).getNumber());
+        memoAdapter.showSearchResult(memoBeans);
         memoAdapter.notifyDataSetChanged();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        memoAdapter.updateListChange();
-        memoAdapter.notifyDataSetChanged();
+        if ("".equals(editTextSearchBar.getText().toString())) {
+            memoAdapter.updateListChange();
+            memoAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override

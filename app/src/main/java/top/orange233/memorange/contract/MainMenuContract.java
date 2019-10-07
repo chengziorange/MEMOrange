@@ -9,7 +9,7 @@ public interface MainMenuContract {
 
     interface View extends IView {
 
-        void showSearchResult(List<MemoBean> memoBeans) ;
+        void showSearchResultSuccess(List<MemoBean> memoBeans) ;
     }
 
     interface Presenter {

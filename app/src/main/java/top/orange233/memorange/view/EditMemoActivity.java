@@ -47,7 +47,9 @@ public class EditMemoActivity extends BaseMVPActivity<EditMemoPresenter> impleme
     @Override
     public void showMemoSuccess(MemoBean memoBean) {
         editTextTitle.setText(memoBean.getTitle());
+        editTextTitle.setSelection(memoBean.getTitle().length());
         editTextContent.setText(memoBean.getContent());
+        editTextContent.setSelection(memoBean.getContent().length());
     }
 
     @Override

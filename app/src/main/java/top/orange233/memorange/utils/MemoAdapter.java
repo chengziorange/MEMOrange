@@ -105,12 +105,15 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.MyViewHolder> 
         holder.memoItemView.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), EditMemoActivity.class);
             Log.d("TAG", "pos = " + holder.getAdapterPosition());
-            intent.putExtra(MyConstants.KEY_MEMO_ID, holder.getAdapterPosition());
+            int index = mMemoBeanList.get(holder.getAdapterPosition()).getNumber();
+            Log.d("TAG", "index = " + index);
+            Log.d("TAG", "index2 = " + mMemoBeanList.get(holder.getAdapterPosition()).getContent());
+            intent.putExtra(MyConstants.KEY_MEMO_ID, index);
             v.getContext().startActivity(intent);
         });
 
         holder.memoItemView.setOnLongClickListener(v -> {
-            initPopWindow(v,holder);
+            initPopWindow(v, holder);
             return true;
         });
     }
@@ -124,8 +127,8 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.MyViewHolder> 
         mMemoBeanList = LitePal.order("number").find(MemoBean.class);
     }
 
-    public void setmMemoBeanList(List<MemoBean> mMemoBeanList) {
-        this.mMemoBeanList = mMemoBeanList;
+    public void showSearchResult(List<MemoBean> searchResultList) {
+        mMemoBeanList = searchResultList;
     }
 
     // ctrl c v 大法
